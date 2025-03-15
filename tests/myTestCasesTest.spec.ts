@@ -1,9 +1,13 @@
 import { test, expect } from '@playwright/test';
-import { genderBotton, signIn } from '../myTestCaseLocators/usernameLocator';
+import { countryBotton, genderBotton, signIn } from '../myTestCaseLocators/usernameLocator';
 import { RegistrationFormExampleMy } from '../myTestCaseLocators/usernameLocator';
+import { RegistrationFormExampleEmptyData } from '../myTestCaseLocators/usernameLocator';
 
-interface  RegistrForm extends RegistrationFormExampleMy {
+interface RegistrForm extends RegistrationFormExampleMy {
     testCaseNumber: number;
+}
+interface RegForm extends RegistrationFormExampleEmptyData {
+
 }
 
 
@@ -245,13 +249,15 @@ test('011/Registration Form/password validation/Positive test', async ({ page })
 
 //parametirization 
 const inputFormArray: RegistrForm[] = [
-    {   testCaseNumber: 1,
+    {
+        testCaseNumber: 1,
         username: "Anna",
         password: "GHaaaH566@",
         email: "ankjh@gmail.com",
         firstName: "kja",
         lastName: "Adgfdgf",
         age: "50",
+        countrySelector: countryBotton.country3,
         genderSelector: genderBotton.gender3
     },
     {
@@ -262,7 +268,9 @@ const inputFormArray: RegistrForm[] = [
         firstName: "khk",
         lastName: "Adf",
         age: "20",
+        countrySelector: countryBotton.country2,
         genderSelector: genderBotton.gender2
+
     },
     {
         testCaseNumber: 3,
@@ -272,7 +280,9 @@ const inputFormArray: RegistrForm[] = [
         firstName: "sadasd",
         lastName: "Addd",
         age: "20",
+        countrySelector: countryBotton.country4,
         genderSelector: genderBotton.gender1
+
     }
 ];
 
@@ -282,25 +292,25 @@ test.describe("Login form testing", () => {
             const signToPage = new signIn(page);
             await signToPage.pageGo();
             await signToPage.fillForm(inputForm);
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
-            await signToPage.registerBotton.click(); 
             await expect(signToPage.verifyInformationMesaage).toHaveText('Verify Your Information');
-            await expect(signToPage.backToFormBotton).toHaveText('Back to Form'); 
+            await expect(signToPage.backToFormBotton).toHaveText('Back to Form');
         });
     }
 });
 
 
 const inputFormArray1: RegistrForm[] = [
-    {   testCaseNumber: 1,
+    {
+        testCaseNumber: 1,
         username: "A",
         password: "GHaaaH566",
         email: "ankjhgmail.com",
         firstName: "a",
         lastName: "",
-        age: "250", 
+        age: "250",
+        countrySelector: countryBotton.country2,
         genderSelector: genderBotton.gender2
+
     },
     {
         testCaseNumber: 2,
@@ -310,9 +320,11 @@ const inputFormArray1: RegistrForm[] = [
         firstName: "",
         lastName: "",
         age: "220",
+        countrySelector: countryBotton.country4,
         genderSelector: genderBotton.gender2
+
     }
-    
+
 ];
 test.describe("Login form testing2", () => {
     for (const inputForm of inputFormArray1) {
@@ -320,18 +332,13 @@ test.describe("Login form testing2", () => {
             const signToPage = new signIn(page);
             await signToPage.pageGo();
             await signToPage.fillForm(inputForm);
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
-            await signToPage.registerBotton.click(); 
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
             await expect(signToPage.username).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.password).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.email).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.firstName).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.lastName).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.age).toHaveCSS('border-color', 'rgb(255, 0, 0)');
-            
+
         });
     }
 });
@@ -339,14 +346,17 @@ test.describe("Login form testing2", () => {
 
 
 const inputFormArray2: RegistrForm[] = [
-    {   testCaseNumber: 1,
+    {
+        testCaseNumber: 1,
         username: "Aasd",
         password: "GHaaaH56@",
         email: "ankjhgmail.com",
         firstName: "akljj",
         lastName: "STSr",
-        age: "50", 
+        age: "50",
+        countrySelector: countryBotton.country3,
         genderSelector: genderBotton.gender3
+
     },
     {
         testCaseNumber: 2,
@@ -356,9 +366,11 @@ const inputFormArray2: RegistrForm[] = [
         firstName: "Ffhgfd",
         lastName: "Agffd",
         age: "20",
+        countrySelector: countryBotton.country1,
         genderSelector: genderBotton.gender2
+
     }
-    
+
 ];
 test.describe("Login form testing3", () => {
     for (const inputForm of inputFormArray2) {
@@ -366,27 +378,23 @@ test.describe("Login form testing3", () => {
             const signToPage = new signIn(page);
             await signToPage.pageGo();
             await signToPage.fillForm(inputForm);
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
-            await signToPage.registerBotton.click(); 
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
             await expect(signToPage.email).toHaveCSS('border-color', 'rgb(255, 0, 0)');
-            
+
         });
     }
 });
 
-
 const inputFormArray3: RegistrForm[] = [
-    {   testCaseNumber: 1,
+    {
+        testCaseNumber: 1,
         username: "A",
         password: "GHaaaH566@",
         email: "ankjh@gmail.com",
         firstName: "axsas",
         lastName: "asxasx",
-        age: "10", 
-        genderSelector: genderBotton.gender1
+        age: "10",
+        genderSelector: genderBotton.gender1,
+        countrySelector: countryBotton.country2
     },
     {
         testCaseNumber: 2,
@@ -396,9 +404,10 @@ const inputFormArray3: RegistrForm[] = [
         firstName: "dsdqdq",
         lastName: "sdwqdxqw",
         age: "120",
-        genderSelector: genderBotton.gender2
+        genderSelector: genderBotton.gender2,
+        countrySelector: countryBotton.country1
     }
-    
+
 ];
 test.describe("Login form testing4", () => {
     for (const inputForm of inputFormArray3) {
@@ -406,13 +415,35 @@ test.describe("Login form testing4", () => {
             const signToPage = new signIn(page);
             await signToPage.pageGo();
             await signToPage.fillForm(inputForm);
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
-            await signToPage.registerBotton.click(); 
-            await signToPage.country.selectOption('us');
-            await signToPage.termsAndConditions.click();
             await expect(signToPage.username).toHaveCSS('border-color', 'rgb(255, 0, 0)');
-            
+
+        });
+    }
+});
+
+
+
+const inputFormArray4: RegForm[] = [
+    {
+        username: "Alex",
+        password: "AAaaa11@",
+        email: "irina@gmail.com",
+        firstName: "jkhkj",
+        lastName: "lkhkjhj",
+        age: "79"
+
+    }
+];
+
+test.describe("Login form testing5", () => {
+    for (const inputForm of inputFormArray4) {
+        test(`Test registration/not choosing country and terms and conditions: ${inputForm.username}`, async ({ page }) => {
+            const signToPage = new signIn(page);
+            await signToPage.pageGo();
+            await signToPage.fillFormEmptyData(inputForm);
+            await expect(signToPage.country).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.registerBotton).toBeVisible();
+
         });
     }
 });

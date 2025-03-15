@@ -1,35 +1,38 @@
 import { Locator, Page } from "@playwright/test";
 
-
-export type RegistrationFormExampleMy = {
+//1
+export type FormExample = {
     username: string,
     password: string,
     email: string,
     firstName: string,
     lastName: string,
     age: string,
+    phoneNumber: string,
     countrySelector: countryBotton,
-    genderSelector: genderBotton;
-
-
+    genderSelector: genderBotton,
+    bio: string
 }
 
-export type RegistrationFormExampleEmptyData = {
+//2
+export type RegisterFormNegativeDataExample = {
     username: string,
     password: string,
     email: string,
     firstName: string,
     lastName: string,
-    age: string;
+    age: string,
+    phoneNumber: string,
+    bio: string
 
 }
+
 
 export enum genderBotton {
     gender1 = "male",
     gender2 = "female",
     gender3 = "other"
 }
-
 
 export enum countryBotton {
     country1 = "us",
@@ -47,15 +50,18 @@ export class signIn {
     firstName: Locator;
     lastName: Locator;
     age: Locator;
+    phoneNumber: Locator;
     country: Locator;
     gender: Locator;
+    bio: Locator;
+    subscribeLetter: Locator;
+    receiveMarketingUpdates: Locator;
+    participateinSurvey: Locator;
     termsAndConditions: Locator;
     registerBotton: Locator;
     verifyInformationMesaage: Locator;
     backToFormBotton: Locator;
-    fillFormNegativeAllData: any;
-
-
+    
     constructor(page: Page) {
         this.page = page;
         this.username = page.locator('#username');
@@ -64,8 +70,13 @@ export class signIn {
         this.firstName = page.locator('#firstName');
         this.lastName = page.locator('#lastName');
         this.age = page.locator('#age');
+        this.phoneNumber = page.locator('#phone');
         this.country = page.locator('#country');
-        this.gender = page.locator('#male');
+        this.gender = page.locator('#registrationForm > div:nth-child(9) > label.required');
+        this.bio = page.locator('#bio');
+        this.subscribeLetter = page.locator('#newsletter');
+        this.receiveMarketingUpdates = page.locator('#marketing');
+        this.participateinSurvey = page.locator('#survey');
         this.termsAndConditions = page.locator('#terms');
         this.registerBotton = page.locator('#registerButton');
         this.verifyInformationMesaage = page.locator('//*[@id="confirmationData"]/h2');
@@ -76,51 +87,46 @@ export class signIn {
         await this.page.goto('file:///C:/Users/irina.fedjko/Downloads/Demo%20(1).html');
     }
 
-    async fillInput(field:
-        {
-            username: string, password: string, kirpich: string, firstName: string, lastName: string,
-            age: string
-        }) {
-        await this.username.fill(field.username);
-        await this.password.fill(field.password);
-        await this.email.fill(field.kirpich);
-        await this.firstName.fill(field.firstName);
-        await this.lastName.fill(field.lastName);
-        await this.age.fill(field.age);
-
-    }
-
     async countrySelectByUser(countrySelector: countryBotton) {
         await this.page.locator(`#country`).selectOption(countrySelector);
     }
 
     async genderSElectbyUser(genderSelector: genderBotton) {
-        await this.page.locator(`#male`).check();
+        await this.page.locator(`#registrationForm > div:nth-child(9) > label.required [value='${genderSelector}']`).check();
     }
-
-    async fillForm(inputForm: RegistrationFormExampleMy) {
+    //1
+    async fillForm(inputForm: FormExample) {
         await this.username.fill(inputForm.username);
         await this.password.fill(inputForm.password);
         await this.email.fill(inputForm.email)
         await this.firstName.fill(inputForm.firstName);
         await this.lastName.fill(inputForm.lastName);
         await this.age.fill(inputForm.age);
+        await this.phoneNumber.fill(inputForm.phoneNumber);
         await this.countrySelectByUser(inputForm.countrySelector);
         await this.genderSElectbyUser(inputForm.genderSelector);
-        
+        await this.bio.fill(inputForm.bio);
+        await this.subscribeLetter.click();
+        await this.receiveMarketingUpdates.click();
+        await this.participateinSurvey.click();
         await this.termsAndConditions.click();
-        await this.registerBotton.click()
-
+        await this.registerBotton.click();
     }
+    // //2
+        async fillFormNegativeAllData(inputForm: RegisterFormNegativeDataExample) {
+            await this.username.fill(inputForm.username);
+            await this.password.fill(inputForm.password);
+            await this.email.fill(inputForm.email)
+            await this.firstName.fill(inputForm.firstName);
+            await this.lastName.fill(inputForm.lastName);
+            await this.age.fill(inputForm.age);
+            await this.bio.fill(inputForm.bio);
+            await this.phoneNumber.fill(inputForm.phoneNumber);
+            await this.registerBotton.click()
 
-    async fillFormEmptyData(inputForm: RegistrationFormExampleEmptyData) {
-        await this.username.fill(inputForm.username);
-        await this.password.fill(inputForm.password);
-        await this.email.fill(inputForm.email)
-        await this.firstName.fill(inputForm.firstName);
-        await this.lastName.fill(inputForm.lastName);
-        await this.age.fill(inputForm.age);
-        await this.registerBotton.click()
-
-    }
+        }
 }
+
+
+
+
