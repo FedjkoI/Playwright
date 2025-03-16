@@ -39,6 +39,9 @@ export enum countryBotton {
 }
 
 export class signIn {
+    // fillFormNData(inputForm: RegFormNegativeData) {
+    //     throw new Error('Method not implemented.');
+    // }
     readonly page: Page;
 
     username: Locator;
@@ -53,7 +56,7 @@ export class signIn {
     registerBotton: Locator;
     verifyInformationMesaage: Locator;
     backToFormBotton: Locator;
-    fillFormNegativeAllData: any;
+   // fillFormNegativeAllData: any;
 
 
     constructor(page: Page) {

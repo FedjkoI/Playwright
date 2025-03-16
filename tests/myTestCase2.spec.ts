@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { countryBotton, genderBotton, signIn } from '../myTestCaseLocators/usernameLocator';
+import { countryBotton, genderBotton, signIn} from '../myTestCaseLocators/registrationPageLocator2';
 import { FormExample } from '../myTestCaseLocators/registrationPageLocator2';
 import { RegisterFormNegativeDataExample } from '../myTestCaseLocators/registrationPageLocator2';
 
@@ -57,25 +57,23 @@ const inputFormArray1: RegFormNegativeData[] = [
     }
 ];
 //2
-test.describe("Login form testing2", () => {
+test.describe("Login testing2", () => {
     for (const inputForm of inputFormArray1) {
-        test(`Test registration with different users/Negative data for allinputs: ${inputForm.username}`, async ({ page }) => {
+        test(`Test registration with different users/Negative data: ${inputForm.testCaseNumber}`, async ({ page }) => {
             const signToPage = new signIn(page);
             await signToPage.pageGo();
-            await signToPage.fillFormNegativeAllData(inputForm);
+            await signToPage.fillFormNData(inputForm);
             await expect(signToPage.username).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.password).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.email).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.firstName).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.lastName).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.age).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.phoneNumber).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.country).toHaveCSS('border-color', 'rgb(255, 0, 0)');
-           
-
         });
     }
 });
-
 
 // //3
 // const inputFormArray2: RegFormEmpty1[] = [

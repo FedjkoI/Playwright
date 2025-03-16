@@ -431,10 +431,8 @@ const inputFormArray4: RegForm[] = [
         firstName: "jkhkj",
         lastName: "lkhkjhj",
         age: "79"
-
     }
 ];
-
 test.describe("Login form testing5", () => {
     for (const inputForm of inputFormArray4) {
         test(`Test registration/not choosing country and terms and conditions: ${inputForm.username}`, async ({ page }) => {
@@ -443,7 +441,6 @@ test.describe("Login form testing5", () => {
             await signToPage.fillFormEmptyData(inputForm);
             await expect(signToPage.country).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.registerBotton).toBeVisible();
-
         });
     }
 });
