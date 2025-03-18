@@ -1,14 +1,18 @@
 import { test, expect } from '@playwright/test';
-import { countryBotton, genderBotton, signIn} from '../myTestCaseLocators/registrationPageLocator2';
+import { countryBotton, genderBotton, signIn } from '../myTestCaseLocators/registrationPageLocator2';
 import { FormExample } from '../myTestCaseLocators/registrationPageLocator2';
 import { RegisterFormNegativeDataExample } from '../myTestCaseLocators/registrationPageLocator2';
-
+import { RegisterFormNegativeDataExampleForRequiredFields } from '../myTestCaseLocators/registrationPageLocator2';
 
 
 interface RegisterForm extends FormExample {
     testCaseNumber: number;
 }
 interface RegFormNegativeData extends RegisterFormNegativeDataExample {
+    testCaseNumber: number;
+}
+
+interface RegFormEmpty1 extends RegisterFormNegativeDataExampleForRequiredFields {
     testCaseNumber: number;
 }
 
@@ -35,6 +39,7 @@ test.describe("Login testing", () => {
             const signToPage = new signIn(page);
             await signToPage.pageGo();
             await signToPage.fillForm(inputForm);
+             await expect(page).toHaveScreenshot();
             await expect(signToPage.verifyInformationMesaage).toHaveText('Verify Your Information');
             await expect(signToPage.backToFormBotton).toHaveText('Back to Form');
         });
@@ -50,7 +55,7 @@ const inputFormArray1: RegFormNegativeData[] = [
         email: "irinafedjkogmail.com",
         firstName: "a",
         lastName: "a",
-        age: "16", 
+        age: "16",
         phoneNumber: "111",
         bio: "a"
 
@@ -71,36 +76,43 @@ test.describe("Login testing2", () => {
             await expect(signToPage.age).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.phoneNumber).toHaveCSS('border-color', 'rgb(255, 0, 0)');
             await expect(signToPage.country).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.username).toHaveScreenshot();
         });
     }
 });
 
-// //3
-// const inputFormArray2: RegFormEmpty1[] = [
-//     {
-//         testCaseNumber: 1,
-//         username: "A@",
-//         password: "A123",
-//         email: "irinafedjkogmail.com",
-//         firstName: "A",
-//         lastName: "A",
-//         age: "0",
-//         //countrySelector: countryBotton.country3,
-//         //genderSelector: genderBotton.gender3
+//3
+const inputFormArray2: RegFormEmpty1[] = [
+    {
+        testCaseNumber: 1,
+        username: "A@",
+        password: "A123",
+        email: "irinafedjkogmail.com",
+        firstName: "A",
+        lastName: "A",
+        age: "0"
+    }
 
-//     }
+];
+//3
+test.describe("Login form testing3", () => {
+    for (const inputForm of inputFormArray2) {
+        test(`Test registration/negative data only for required fields: ${inputForm.username}`, async ({ page }) => {
+            const signToPage = new signIn(page);
+            await signToPage.pageGo();
+            await signToPage.fillFormNDataRequiredFields(inputForm);
+            await expect(signToPage.username).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.password).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.email).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.firstName).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.lastName).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.age).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.country).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+            await expect(signToPage.age).toHaveScreenshot();
 
-// ];
-// //3
-// test.describe("Login form testing3", () => {
-//     for (const inputForm of inputFormArray2) {
-//         test(`Test registration/negative data only for required fields: ${inputForm.username}`, async ({ page }) => {
-//             const signToPage = new signIn(page);
-//             await signToPage.pageGo();
-//             await signToPage.fillForm(inputForm);
-//             await expect(signToPage.email).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+        });
+    }
+});
 
-//         });
-//     }
-// });
+
 
